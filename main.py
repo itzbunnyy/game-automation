@@ -121,7 +121,7 @@ Requirements:
 Return ONLY the complete HTML code, nothing else. Start with <!DOCTYPE html>
 """
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={GEMINI_API_KEY}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}"
     payload = {
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {"temperature": 0.8 + (attempt * 0.1), "maxOutputTokens": 8192}
@@ -243,7 +243,7 @@ def build_email_html(plan, game_name, game_url, date_str, description):
 def generate_description(plan, game_name):
     """Use Gemini to write a short game description."""
     prompt = f"Write a 2-sentence exciting game description for a {plan['Difficulty']} difficulty {plan['Game Type']} game called '{game_name}' with a {plan['Theme']} theme. Be enthusiastic and fun!"
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={GEMINI_API_KEY}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}"
     payload = {"contents": [{"parts": [{"text": prompt}]}]}
     response = requests.post(url, json=payload).json()
     try:
@@ -272,7 +272,7 @@ def send_email(plan, game_name, game_url, date_str, html, email_html):
     attachment.add_header("Content-Disposition", f"attachment; filename=game-{date_str}.html")
     msg.attach(attachment)
 
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+    with smtplib.SMTP_SSL("smtp.gmail.com", 587) as server:
         server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
         server.sendmail(EMAIL_ADDRESS, EMAIL_ADDRESS, msg.as_string())
 
@@ -289,7 +289,7 @@ def send_failure_email(date_str, reason):
     body = f"Game generation failed on {date_str}.\n\nReason: {reason}\n\nPlease check your setup."
     msg.attach(MIMEText(body, "plain"))
     try:
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 587) as server:
             server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
             server.sendmail(EMAIL_ADDRESS, EMAIL_ADDRESS, msg.as_string())
     except Exception as e:
