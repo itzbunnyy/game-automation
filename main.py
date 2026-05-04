@@ -18,7 +18,7 @@ EMAIL_PASSWORD  = os.environ.get("EMAIL_PASSWORD")
 GITHUB_TOKEN    = os.environ.get("GH_TOKEN")
 GITHUB_USERNAME = os.environ.get("GH_USERNAME")
 GITHUB_REPO     = os.environ.get("GH_REPO")    # your games repo name
-EXCEL_FILE      = "game_plan.xlsx"
+EXCEL_FILE      = "game_plan.csv"
 SAVE_FOLDER     = r"D:\game upload automation details"
 MAX_RETRIES     = 3
 # ─────────────────────────────────────────────────────────────────────────────
