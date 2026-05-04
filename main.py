@@ -18,7 +18,7 @@ EMAIL_PASSWORD  = os.environ.get("EMAIL_PASSWORD")
 GITHUB_TOKEN    = os.environ.get("GH_TOKEN")
 GITHUB_USERNAME = os.environ.get("GH_USERNAME")
 GITHUB_REPO     = os.environ.get("GH_REPO")    # your games repo name
-EXCEL_FILE      = "game_plan.csv"
+EXCEL_FILE = "game_plan.csv"
 SAVE_FOLDER     = r"D:\game upload automation details"
 MAX_RETRIES     = 3
 # ─────────────────────────────────────────────────────────────────────────────
@@ -73,7 +73,7 @@ def read_today_plan():
     if not os.path.exists(EXCEL_FILE):
         raise FileNotFoundError(f"Excel file not found: {EXCEL_FILE}")
 
-    df = pd.read_excel(EXCEL_FILE)
+    df = pd.read_csv(EXCEL_FILE)
     df.columns = ["Day", "Game Type", "Theme", "Difficulty"]
 
     today = datetime.date.today()
